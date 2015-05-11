@@ -13,13 +13,15 @@ def shape(array):
     except TypeError:
         return (len(array),)
 
-def vector_walk(x, y, op=sum):
+def vector_walk(x, y, op=sum, filter=lambda x,y: True):
     if shape(x) != shape(y):
         raise ShapeException
     try:
         return [op([x_val, y[idx_r][idx_c]])
                 for idx_r, row in enumerate(x)
-                for idx_c, x_val in row]
+                for idx_c, x_val in row
+                if filter(idx_r, idx_c)
+                ]
     except TypeError:
         return [op([x_val, y[idx_r]]) for idx_r, x_val in enumerate(x)]
 
@@ -27,6 +29,14 @@ def sub(a_list):
     if len(a_list) != 2:
         raise ShapeException
     return a_list[0] - a_list[1]
+
+def times(a_list):
+    if len(a_list) != 2:
+        raise ShapeException
+    return a_list[0] * a_list[1]
+
+def is_equal(idx_x, idx_y):
+    return idx_x == idx_y
 
 def vector_add(x, y):
     return vector_walk(x, y, op=sum)
@@ -38,7 +48,8 @@ def vector_sum(*vectors):
     return functools.reduce(vector_add, vectors)
 
 def dot(x, y):
-    pass
+    return sum(vector_walk(x, y, op=times, filter=is_equal))
+
 def vector_multiply(x, y):
     pass
 def vector_mean(x, y):
