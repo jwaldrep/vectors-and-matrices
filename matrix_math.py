@@ -2,11 +2,23 @@ class ShapeException(Exception):
     pass
 
 
-def shape(vector):
+def shape(array):
     """Take a vector or matrix and return a tuple with the
     number of rows (for a vector) or the number of rows and columns
     (for a matrix.)"""
-    pass
+    try:
+        return (len(array), len(array[0]))
+    except TypeError:
+        return (len(array),)
+
+    """
+    m = [3, 4]
+    v = [1, 3, 0]
+
+    assert shape(m) == (2,)
+    assert shape(v) == (3,)
+    assert shape([1]) == (1,)
+    """
 
 def matrix_vector_multiply(x, y):
     pass
