@@ -39,8 +39,8 @@ def times(a_list):
 def is_equal(idx_x, idx_y):
     return idx_x == idx_y
 
-def mean(a_list):
-    return sum(a_list) / len(a_list)
+# def mean(a_list):
+#     return sum(a_list) / len(a_list)
 
 def vector_add(x, y):
     return vector_walk(x, y, op=sum)
@@ -54,12 +54,12 @@ def vector_sum(*vectors):
 def dot(x, y):
     return sum(vector_walk(x, y, op=times, filter=is_equal))
 
-def vector_multiply(x, y):
-    scalar_matrix = vector_walk(x,x, op=lambda x_:y)
-    return vector_walk(x,scalar_matrix, op=times)
+def vector_multiply(x, scalar):
+    scalar_matrix = vector_walk(x,x, op=lambda x_:scalar)
+    return vector_walk(x, scalar_matrix, op=times)
 
 def vector_mean(*vectors):
-    sum_vector = vector_sum(vectors)
+    sum_vector = vector_sum(*vectors)
     n = len(vectors)
     return vector_multiply(sum_vector, 1 / n)
 
@@ -72,8 +72,10 @@ def matrix_row(x, n):
 def matrix_col(x, n):
     return [val for row in x for idx, val in enumerate(row) if idx == n]
 
-def matrix_scalar_multiply(x, y):
-    pass
+def matrix_scalar_multiply(x, scalar):
+    scalar_matrix = vector_walk(x,x, op=lambda x_:scalar)
+    return vector_walk(x,scalar_matrix, op=times)
+
 def matrix_matrix_multiply(x, y):
     pass
 def matrix_vector_multiply(x, y):
