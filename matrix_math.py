@@ -66,10 +66,12 @@ def vector_mean(*vectors):
 def magnitude(x):
     return math.sqrt(dot(x,x))
 
-def matrix_row(x, y):
-    pass
-def matrix_col(x, y):
-    pass
+def matrix_row(x, n):
+    return x[n]
+
+def matrix_col(x, n):
+    return [val for row in x for idx, val in enumerate(row) if idx == n]
+
 def matrix_scalar_multiply(x, y):
     pass
 def matrix_matrix_multiply(x, y):
