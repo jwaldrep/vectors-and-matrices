@@ -19,13 +19,19 @@ def vector_walk(x, y, op=sum):
                 for idx_r, row in enumerate(x)
                 for idx_c, x_val in row]
     except TypeError:
-        return [x_val + y[idx_r] for idx_r, x_val in enumerate(x)]
+        return [op([x_val, y[idx_r]]) for idx_r, x_val in enumerate(x)]
+
+def sub(a_list):
+    if len(a_list) != 2:
+        raise ShapeException
+    return a_list[0] - a_list[1]
 
 def vector_add(x, y):
     return vector_walk(x, y, op=sum)
 
 def vector_sub(x, y):
-    pass
+    return vector_walk(x, y, op=sub)
+
 def vector_sum(x, y):
     pass
 def dot(x, y):
