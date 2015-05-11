@@ -1,3 +1,5 @@
+import functools
+
 class ShapeException(Exception):
     pass
 
@@ -32,8 +34,9 @@ def vector_add(x, y):
 def vector_sub(x, y):
     return vector_walk(x, y, op=sub)
 
-def vector_sum(x, y):
-    pass
+def vector_sum(*vectors):
+    return functools.reduce(vector_add, vectors)
+
 def dot(x, y):
     pass
 def vector_multiply(x, y):
