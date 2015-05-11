@@ -11,15 +11,19 @@ def shape(array):
     except TypeError:
         return (len(array),)
 
-def vector_add(x, y):
+def vector_walk(x, y, op=sum):
     if shape(x) != shape(y):
         raise ShapeException
     try:
-        return [x_val + y[idx_r][idx_c]
+        return [op([x_val, y[idx_r][idx_c]])
                 for idx_r, row in enumerate(x)
                 for idx_c, x_val in row]
     except TypeError:
         return [x_val + y[idx_r] for idx_r, x_val in enumerate(x)]
+
+def vector_add(x, y):
+    return vector_walk(x, y, op=sum)
+
 def vector_sub(x, y):
     pass
 def vector_sum(x, y):
