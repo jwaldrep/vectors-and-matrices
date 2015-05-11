@@ -13,7 +13,7 @@ def shape(array):
     except TypeError:
         return (len(array),)
 
-def vector_walk(x, y, op=sum, filter=lambda x,y: True):
+def vector_walk(x, y, op=sum, filter=lambda x_,y_: True):
     if shape(x) != shape(y):
         raise ShapeException
     try:
@@ -51,7 +51,9 @@ def dot(x, y):
     return sum(vector_walk(x, y, op=times, filter=is_equal))
 
 def vector_multiply(x, y):
-    pass
+    scalar_matrix = vector_walk(x,x, op=lambda x_,:y)
+    return vector_walk(x,scalar_matrix, op=times)
+
 def vector_mean(x, y):
     pass
 def magnitude(x):
