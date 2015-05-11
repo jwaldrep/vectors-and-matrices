@@ -1,4 +1,5 @@
 import functools
+import math
 
 class ShapeException(Exception):
     pass
@@ -38,6 +39,9 @@ def times(a_list):
 def is_equal(idx_x, idx_y):
     return idx_x == idx_y
 
+def mean(a_list):
+    return sum(a_list) / len(a_list)
+
 def vector_add(x, y):
     return vector_walk(x, y, op=sum)
 
@@ -51,13 +55,17 @@ def dot(x, y):
     return sum(vector_walk(x, y, op=times, filter=is_equal))
 
 def vector_multiply(x, y):
-    scalar_matrix = vector_walk(x,x, op=lambda x_,:y)
+    scalar_matrix = vector_walk(x,x, op=lambda x_:y)
     return vector_walk(x,scalar_matrix, op=times)
 
-def vector_mean(x, y):
-    pass
+def vector_mean(*vectors):
+    sum_vector = vector_sum(vectors)
+    n = len(vectors)
+    return vector_multiply(sum_vector, 1 / n)
+
 def magnitude(x):
-    pass
+    return math.sqrt(dot(x,x))
+
 def matrix_row(x, y):
     pass
 def matrix_col(x, y):
