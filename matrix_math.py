@@ -39,9 +39,6 @@ def times(a_list):
 def is_equal(idx_x, idx_y):
     return idx_x == idx_y
 
-# def mean(a_list):
-#     return sum(a_list) / len(a_list)
-
 def vector_add(x, y):
     return vector_walk(x, y, op=sum)
 
@@ -72,6 +69,10 @@ def matrix_row(x, n):
 def matrix_col(x, n):
     return [val for row in x for idx, val in enumerate(row) if idx == n]
 
+def matrix_cols(x):
+    for col in [val for row in x for idx, val in enumerate(row)]:
+        yield col
+
 def matrix_scalar_multiply(matrix, scalar):
     return [[i*scalar for i in row] for row in matrix]
 
@@ -80,9 +81,23 @@ def matrix_vector_multiply(matrix, vector):
         raise ShapeException
 
     step1 = [[val * vector[idx] for idx, val in enumerate(row)] for row in matrix]
-    print('step1', step1)
     return [sum(x) for x in step1]
 
 def matrix_matrix_multiply(x, y):
     if shape(x)[1] != shape(y)[0]:
         raise ShapeException
+    print('x', x)
+    print('y', y)
+    print('matrix_row(x,0)', matrix_row(x,0))
+    print('matrix_col(y,2)', matrix_col(y,2))
+    print('dot', dot(matrix_row(x,0), matrix_col(y,0)))
+
+    y_transposed = [[row[i] for row in y] for i in range(len(y[0]))]
+
+    return [[dot(row, col) for col in y_transposed] for row in x]
+    # return [[dot(matrix_row(x, j), matrix_row(y_transposed, i)) for i, val in enumerate(row)]
+    #        for j, row in enumerate(x)]
+
+    # return [[dot(row, val) for i,val in enumerate(matrix_cols(y))
+    #        if j < len(y)]
+    #        for j, row in enumerate(x)]
