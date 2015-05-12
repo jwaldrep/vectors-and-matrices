@@ -72,11 +72,17 @@ def matrix_row(x, n):
 def matrix_col(x, n):
     return [val for row in x for idx, val in enumerate(row) if idx == n]
 
-def matrix_scalar_multiply(x, scalar):
-    scalar_matrix = vector_walk(x,x, op=lambda x_:scalar)
-    return vector_walk(x,scalar_matrix, op=times)
+def matrix_scalar_multiply(matrix, scalar):
+    return [[i*scalar for i in row] for row in matrix]
+
+def matrix_vector_multiply(matrix, vector):
+    if shape(matrix)[1] != shape(vector)[0]:
+        raise ShapeException
+
+    step1 = [[val * vector[idx] for idx, val in enumerate(row)] for row in matrix]
+    print('step1', step1)
+    return [sum(x) for x in step1]
 
 def matrix_matrix_multiply(x, y):
-    pass
-def matrix_vector_multiply(x, y):
-    pass
+    if shape(x)[1] != shape(y)[0]:
+        raise ShapeException
